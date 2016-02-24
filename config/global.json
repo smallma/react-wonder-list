@@ -1,0 +1,15 @@
+{
+  "global": {
+    "parseVersion": "0.1.0"
+  },
+  "applications": {
+    "_default": {
+      "link": "wonderList"
+    },
+    "wonderList": {
+      "applicationId": "rXBTu9sVh0xaYH5aLChuCOKtYFyNlGqd4tJDZWbW",
+      "masterKey": "ArPnDJyIEHE9UzZhFJaxtXoDiVcuAXVI4JXS4tDq",
+      "javascriptKey": "MuJsVMhRQIo3AhFMcLMeGJQvAaC90TDFgfIzVbkA"
+    }
+  }
+}
