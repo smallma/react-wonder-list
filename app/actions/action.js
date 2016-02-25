@@ -1,7 +1,7 @@
 import ParseReact from 'parse-react';
 
 export default {
-  addPost(addItem) {
+  addItem(addItem) {
     return ParseReact.Mutation.Create("items", addItem).dispatch();
   }
 }
