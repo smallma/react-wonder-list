@@ -26,7 +26,8 @@ export default class App extends ParseComponent {
     );
     console.log('Get data!!');
     return {
-      items: (new Parse.Query('items')).ascending('createdAt')
+      items: (new Parse.Query('items')).ascending('createdAt'),
+      classes: (new Parse.Query('classes')).ascending('createdAt')
     };
   }
   render() {
@@ -35,7 +36,8 @@ export default class App extends ParseComponent {
         <Header />
         <div>
           {React.cloneElement(this.props.children, {
-            items: this.data && this.data.items
+            items: this.data && this.data.items,
+            classes: this.data && this.data.classes
           })}
         </div>
         <Footer />
