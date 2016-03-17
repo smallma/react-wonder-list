@@ -51,7 +51,7 @@ const styles = {
   },
   dropzone: {
     paddingTop: 80,
-    textAlign: center,
+    textAlign: 'center',
     width: '90%',
     height: 200,
     margin: '30px 5%',
