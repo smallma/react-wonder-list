@@ -214,13 +214,7 @@ export default class Main extends PureComponent {
         </div>
 
         <div style={styles.btnSubmitArea}>
-          <RaisedButton
-            disabled={true}
-            style={styles.btnSubmit}
-            label="新增"
-            disabledLabelColor='white'
-            disabledBackgroundColor={colors.red200}
-            type='submit' />
+          <RaisedButton type="submit" label="送出" className="button-submit" primary={true} />
         </div>
 
       </form>

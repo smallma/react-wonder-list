@@ -1,5 +1,6 @@
 import React from 'react';
 import PureComponent from 'react-pure-render/component';
+import materialDesignIcons from 'material-design-icons';
 
 import FontIcon from 'material-ui/lib/font-icon';
 import Colors from 'material-ui/lib/styles/colors';
@@ -8,6 +9,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import IconButton from 'material-ui/lib/icon-button';
 const colors = require('material-ui/lib/styles/colors.js');
 
 
@@ -19,6 +21,9 @@ const styles = {
   },
   btn: {
     marginTop: 6
+  },
+  fontIcon: {
+    fontSize: 25
   }
 };
 
@@ -34,32 +39,30 @@ export default class Header extends PureComponent {
 
   goIndex(event) {
     event.preventDefault();
-    window.location.href = "/#/";
+    window.location.href = '/#/';
   }
 
   goAddItem(event) {
     event.preventDefault();
-    window.location.href = "/#/Add/";
+    window.location.href = '/#/Add/';
   }
 
   render() {
     return (
       <Toolbar style={styles.toolbar}>
-        <ToolbarGroup float="left">
+        <ToolbarGroup float='left'>
           <ToolbarTitle
             style={styles.bartitle}
             onClick={this.goIndex.bind(this)}
-            text="Wonder List" />
+            text='Wonder List' />
         </ToolbarGroup>
-        <ToolbarGroup float="right">
-          <FloatingActionButton
-            disabledColor={colors.red200}
-            disabled={true}
-            mini={true}
-            style={styles.btn}
-            onClick={this.goAddItem.bind(this)}>
-            <ContentAdd />
-          </FloatingActionButton>
+        <ToolbarGroup float='right'>
+          <IconButton
+            style={styles.fontIcon}
+            tooltip='top-right'
+            onClick={this.goAddItem.bind(this)}
+            tooltipPosition='top-right'><i className="material-icons header_icon">add</i>
+          </IconButton>
 
         </ToolbarGroup>
       </Toolbar>

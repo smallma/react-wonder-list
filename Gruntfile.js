@@ -21,7 +21,7 @@ module.exports = function(grunt, type) {
       },
       sass: {
         files: "app/sass/*.sass",
-        tasks: ['sass']
+        tasks: ['sass:dev']
       },
       react: {
         files: ['app/**/*.jsx', 'app/**/*.js'],
@@ -73,5 +73,5 @@ module.exports = function(grunt, type) {
     }
   });
 
-  grunt.registerTask('default', ['env:development', 'browserSync', 'browserify']);
+  grunt.registerTask('default', ['env:development', 'browserSync', 'browserify', 'watch:sass']);
 };
