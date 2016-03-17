@@ -6,9 +6,19 @@ import Colors from 'material-ui/lib/styles/colors';
 import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+const colors = require('material-ui/lib/styles/colors.js');
+
 
 const styles = {
+  bartitle: {
+    cursor: 'pointer'
+  },
   toolbar: {
+  },
+  btn: {
+    marginTop: 6
   }
 };
 
@@ -37,17 +47,20 @@ export default class Header extends PureComponent {
       <Toolbar style={styles.toolbar}>
         <ToolbarGroup float="left">
           <ToolbarTitle
+            style={styles.bartitle}
             onClick={this.goIndex.bind(this)}
             text="Wonder List" />
         </ToolbarGroup>
         <ToolbarGroup float="right">
-          <FontIcon
-            onClick={this.goAddItem.bind(this)}
-            className="fa fa-plus"
-            style={iconStyles}
-            color={Colors.lightBlue500}
-            hoverColor={Colors.lightBlue900}
-          />
+          <FloatingActionButton
+            disabledColor={colors.red200}
+            disabled={true}
+            mini={true}
+            style={styles.btn}
+            onClick={this.goAddItem.bind(this)}>
+            <ContentAdd />
+          </FloatingActionButton>
+
         </ToolbarGroup>
       </Toolbar>
     );
