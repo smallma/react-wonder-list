@@ -13,6 +13,7 @@ import IconButton from 'material-ui/lib/icon-button';
 const colors = require('material-ui/lib/styles/colors.js');
 
 
+
 const styles = {
   bartitle: {
     cursor: 'pointer'

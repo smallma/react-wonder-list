@@ -1,7 +1,15 @@
 import ParseReact from 'parse-react';
 
 export default {
-  addItem(addItem) {
-    return ParseReact.Mutation.Create("items", addItem).dispatch();
+  addItem(addData) {
+    console.log('Actions - addItem');
+    console.log(addData);
+    return ParseReact.Mutation.Create("items", addData).dispatch();
+  },
+  deleteItem(deleteData) {
+    return ParseReact.Mutation.Destroy("items", deleteData).dispatch();
+  },
+  addImage(itemObj, imageObj) {
+    return ParseReact.Mutation.Set(itemObj, {'image': imageObj}).dispatch();
   }
 }

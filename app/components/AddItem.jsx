@@ -1,5 +1,7 @@
 import React from 'react';
 import PureComponent from 'react-pure-render/component';
+import { Parse } from 'parse';
+// import ParseReact from 'parse-react';
 
 import TextField from 'material-ui/lib/text-field';
 import RadioButton from 'material-ui/lib/radio-button';
@@ -87,68 +89,59 @@ export default class Main extends PureComponent {
   }
 
   _onDrop(files) {
+    const that = this;
+
     if (files && files[0] ) {
       var FR = new FileReader();
       FR.onload = function(e) {
         console.log('base64: ' + e.target.result);
-        this.imageBase64 = e.target.result;
+        that.imageBase64 = e.target.result;
       };
       FR.readAsDataURL(files[0]);
     }
   }
 
-  _uploadImage(item, imageBase64) {
-    const promise = new Promise();
-
+  _uploadImage(itemObj, imageBase64, resolve) {
     const imageFile = new Parse.File('upload.jpg', {base64: imageBase64});
 
-    imageFile.save()
-      .then(function () {
-        return ParseReact.Mutation.Set(item, {'primaryPhoto':imageFile}).dispatch();
+    return imageFile.save()
+      .then(function (imageObj) {
+        return Actions.addImage(itemObj, imageObj);
       })
-      .then(
-        function () {
-          return promise.resolve();
-        },
-        function (error) {
-          console.log('Error');
-          console.log(error);
-          return promise.reject();
-        }
-      );
-
-    return promise;
+      .then(function () {
+        resolve();
+      });
   }
 
   _addPost(event) {
-    var that = this;
-
     event.preventDefault();
-    let {name, subtitle, describe, itemClass} = this.refs;
 
+    var that = this;
+    let {name, subtitle, describe, itemClass, price} = this.refs;
     const itemClassId = itemClass.getSelectedValue();
-    debugger;
-
-    Actions.addItem({
+    const inputData = {
       name: name.getValue(),
       subtitle: subtitle.getValue(),
       describe: describe.getValue(),
-      classId: itemClassId
+      price: price.getValue() || 'N/A'
+      // classId: itemClassId
+    };
+
+    function asynAddImage(obj) {
+      return new Promise((resolve, reject) => {
+        if (!that.imageBase64){
+          resolve();
+        } else {
+          return that._uploadImage(obj, that.imageBase64, resolve);
+        }
+      });
+    }
+
+    Actions.addItem(inputData)
+    .then((obj) => {
+      return asynAddImage(obj);
     }).then((obj) => {
-      console.log('obj1: ');
-      console.log(obj);
-
-      console.log('that.imageBase64: ' + that.imageBase64);
-
-      if (! that.imageBase64) {return Promise.resolve(); }
-
-      const item = (new Parse.Query('items')).equalTo('objectId', obj.objectId);
-
-      return that._uploadImage(item, that.imageBase64);
-      // const imageFile = new Parse.File('upload.jpg', {base64: this.imageBase64});
-
-    }).then(() => {
-      this.props.history.pushState(null, '/');
+      that.props.history.pushState(null, '/');
     });
   }
 
@@ -196,6 +189,14 @@ export default class Main extends PureComponent {
           hintText="物品描述"
           floatingLabelText="描述"
           ref='describe'
+        />
+        <br/>
+
+        <TextField
+          style={styles.textfield}
+          hintText="物品價格"
+          floatingLabelText="價格"
+          ref='price'
         />
         <br/>
 

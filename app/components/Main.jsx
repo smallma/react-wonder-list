@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router';
 import PureComponent from 'react-pure-render/component';
+import IconButton from 'material-ui/lib/icon-button';
 
 // import GridList from 'material-ui/lib/grid-list/grid-list';
 // import GridTile from 'material-ui/lib/grid-list/grid-tile';
@@ -44,8 +45,21 @@ export default class Main extends PureComponent {
     super(props);
   }
 
+  componentDidUpdate() {
+    // $('.items')
+
+    console.log('')
+    $(".items").off("click");
+    $('.items').click(function () {
+      console.log($(this).data('id'));
+
+
+    });
+  }
+
   render() {
     var row = [];
+
     this.props.items.map(function(item) {
 
       const imageSrc = item.image && item.image.url();
@@ -56,7 +70,10 @@ export default class Main extends PureComponent {
       // console.log('createdAt: ' + createdAt.yyyymmdd());
 
       row.push(
-        <div style={styles.item} className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div
+          data-id={item.objectId}
+          style={styles.item}
+          className="items col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div style={boughtStyles} className="row">
             <div style={styles.imgArea} className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
               <img style={styles.img} src={imageSrc}/>
@@ -65,7 +82,8 @@ export default class Main extends PureComponent {
               <div>{item.name}</div>
               <div>{item.subTitle}</div>
               <div>NT ${item.price}</div>
-              <div>{item.describe}</div>
+
+              <div >{item.describe}</div>
               <div>Joined in {createdAt.toISOString().substring(0, 10)}</div>
             </div>
           </div>
