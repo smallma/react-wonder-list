@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from 'react-router';
-import PureComponent from 'react-pure-render/component';
+// import PureComponent from 'react-pure-render/component';
+import shallowCompare from 'react-addons-shallow-compare';
+
 import IconButton from 'material-ui/lib/icon-button';
 
 // import GridList from 'material-ui/lib/grid-list/grid-list';
@@ -39,8 +41,12 @@ const styles = {
 
 };
 
+// export default class Main extends PureComponent {
+export default class Main extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
 
-export default class Main extends PureComponent {
   constructor(props) {
     super(props);
   }

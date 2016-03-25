@@ -1,5 +1,6 @@
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
+// import PureComponent from 'react-pure-render/component';
+import shallowCompare from 'react-addons-shallow-compare';
 import materialDesignIcons from 'material-design-icons';
 
 import FontIcon from 'material-ui/lib/font-icon';
@@ -33,7 +34,12 @@ const iconStyles = {
 };
 
 
-export default class Header extends PureComponent {
+// export default class Header extends PureComponent {
+export default class Header extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   constructor(props) {
     super(props);
   }

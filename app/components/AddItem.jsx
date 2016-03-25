@@ -1,5 +1,6 @@
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
+// import PureComponent from 'react-pure-render/component';
+import shallowCompare from 'react-addons-shallow-compare';
 import { Parse } from 'parse';
 // import ParseReact from 'parse-react';
 
@@ -69,7 +70,12 @@ const styles = {
   }
 }
 
-export default class Main extends PureComponent {
+// export default class Main extends PureComponent {
+export default class AddItem extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   constructor(props) {
     super(props);
   }
