@@ -38,6 +38,11 @@ const styles = {
   notBuy: {
 
   },
+  date: {
+    textAlign: 'right',
+    fontSize: 12,
+    color: 'gray'
+  },
 
 };
 
@@ -73,24 +78,22 @@ export default class Main extends React.Component {
       const boughtStyles = item.hasBought ? styles.bought : styles.notBuy;
       const createdAt = new Date(item.createdAt);
 
-      // console.log('createdAt: ' + createdAt.yyyymmdd());
-
       row.push(
         <div
           data-id={item.objectId}
           style={styles.item}
+          key={item.objectId}
           className="items col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div style={boughtStyles} className="row">
-            <div style={styles.imgArea} className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div style={styles.imgArea} className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
               <img style={styles.img} src={imageSrc}/>
             </div>
-            <div style={styles.info} className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-              <div>{item.name}</div>
-              <div>{item.subTitle}</div>
+            <div style={styles.info} className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <div>{item.name} - {item.subtitle}</div>
               <div>NT ${item.price}</div>
-
               <div >{item.describe}</div>
-              <div>Joined in {createdAt.toISOString().substring(0, 10)}</div>
+              <br/>
+              <div style={styles.date}>Joined in {createdAt.toISOString().substring(0, 10)}</div>
             </div>
           </div>
         </div>

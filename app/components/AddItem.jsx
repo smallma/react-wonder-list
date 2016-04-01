@@ -125,6 +125,12 @@ export default class AddItem extends React.Component {
     var that = this;
     let {name, subtitle, describe, itemClass, price} = this.refs;
     const itemClassId = itemClass.getSelectedValue();
+
+    console.log('itemClassId: ' + itemClassId);
+    this.props.classes.map(function(itemClass) {
+      console.log('Class obj: ' + JSON.stringify(itemClass));
+    });
+
     const inputData = {
       name: name.getValue(),
       subtitle: subtitle.getValue(),
@@ -160,6 +166,7 @@ export default class AddItem extends React.Component {
         <RadioButton
           defaultChecked={first}
           name='itemClass'
+          key={itemClass.objectId}
           value={itemClass.objectId}
           label={itemClass.name}
           style={styles.radioBtn}

@@ -11,5 +11,8 @@ export default {
   },
   addImage(itemObj, imageObj) {
     return ParseReact.Mutation.Set(itemObj, {'image': imageObj}).dispatch();
+  },
+  addRelationClass(itemObj, classObj) {
+    return ParseReact.Mutation.AddRelation(itemObj, "relation", classObj).dispatch();
   }
 }
