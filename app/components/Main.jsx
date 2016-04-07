@@ -68,8 +68,23 @@ export default class Main extends React.Component {
     });
   }
 
+
   render() {
-    var row = [];
+    let row = [];
+    const that = this;
+
+    function _getClassName(classes, classId) {
+      let classname = '';
+      classes.map(function(itemClass) {
+        console.log('Class obj: ' + JSON.stringify(itemClass));
+        if (classId === itemClass.objectId) {
+          classname = itemClass.name;
+        }
+      });
+
+      console.log('className: ' + classname);
+      return classname;
+    }
 
     this.props.items.map(function(item) {
 
@@ -77,6 +92,12 @@ export default class Main extends React.Component {
       const subTitle = item.subtitle || '';
       const boughtStyles = item.hasBought ? styles.bought : styles.notBuy;
       const createdAt = new Date(item.createdAt);
+      let itemClassName = ''
+
+      if (item.classId && item.classId.objectId) {
+        console.log(item.classId.objectId);
+        itemClassName = _getClassName(that.props.classes, item.classId.objectId);
+      }
 
       row.push(
         <div
@@ -90,6 +111,7 @@ export default class Main extends React.Component {
             </div>
             <div style={styles.info} className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <div>{item.name} - {item.subtitle}</div>
+              <div>{itemClassName}</div>
               <div>NT ${item.price}</div>
               <div >{item.describe}</div>
               <br/>

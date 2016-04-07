@@ -50,7 +50,7 @@ const styles = {
     marginBottom: 16,
   },
   dropzoneArea: {
-    marginTop: 70
+    marginTop: 110
   },
   dropzone: {
     paddingTop: 80,
@@ -72,12 +72,19 @@ const styles = {
 
 // export default class Main extends PureComponent {
 export default class AddItem extends React.Component {
+
+
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      radioDefaultValue: ''
+    };
+
   }
 
   // observe() {
@@ -119,18 +126,27 @@ export default class AddItem extends React.Component {
       });
   }
 
+  _getClassObj(classId) {
+    let classObj;
+
+    this.props.classes.map(function(itemClass) {
+      console.log('Class obj: ' + JSON.stringify(itemClass));
+      if (classId === itemClass.objectId) {
+        classObj = itemClass;
+      }
+    });
+
+    return classObj;
+  }
+
   _addPost(event) {
     event.preventDefault();
 
     var that = this;
     let {name, subtitle, describe, itemClass, price} = this.refs;
+    let itemObj;
     const itemClassId = itemClass.getSelectedValue();
-
-    console.log('itemClassId: ' + itemClassId);
-    this.props.classes.map(function(itemClass) {
-      console.log('Class obj: ' + JSON.stringify(itemClass));
-    });
-
+    const classObj = this._getClassObj(itemClassId);
     const inputData = {
       name: name.getValue(),
       subtitle: subtitle.getValue(),
@@ -139,7 +155,7 @@ export default class AddItem extends React.Component {
       // classId: itemClassId
     };
 
-    function asynAddImage(obj) {
+    function _asynAddImage(obj) {
       return new Promise((resolve, reject) => {
         if (!that.imageBase64){
           resolve();
@@ -147,24 +163,26 @@ export default class AddItem extends React.Component {
           return that._uploadImage(obj, that.imageBase64, resolve);
         }
       });
-    }
+    };
 
     Actions.addItem(inputData)
     .then((obj) => {
-      return asynAddImage(obj);
+      itemObj = obj;
+      return _asynAddImage(obj);
+    }).then((obj) => {
+      return Actions.addRelationClass(itemObj, classObj);
     }).then((obj) => {
       that.props.history.pushState(null, '/');
     });
   }
 
   render() {
+    const that = this;
     let radioButtons = [];
-    let first = true;
 
     this.props.classes.map(function(itemClass) {
       radioButtons.push(
         <RadioButton
-          defaultChecked={first}
           name='itemClass'
           key={itemClass.objectId}
           value={itemClass.objectId}
@@ -172,9 +190,6 @@ export default class AddItem extends React.Component {
           style={styles.radioBtn}
         />
       );
-
-      if (first) { first = false; }
-
     });
 
     return (
@@ -215,7 +230,7 @@ export default class AddItem extends React.Component {
 
         <div style={styles.radioGroup}>
           <span>物品分類：</span>
-          <RadioButtonGroup name='itemClass' ref='itemClass' defaultSelected='not_light'>
+          <RadioButtonGroup name='itemClass' ref='itemClass' defaultSelected='DB7wb4qGmu'>
             {radioButtons}
           </RadioButtonGroup>
         </div>
