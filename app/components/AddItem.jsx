@@ -19,17 +19,18 @@ const styles = {
   },
   form: {
     margin: 40,
-    width: 710,
+    maxWidth: 710,
     margin: '40px auto'
   },
   titleStyle: {
     fontSize: '1.75rem'
   },
   radioGroup: {
-    margin: '30px 5% 40px'
+    margin: '30px 5% 0'
   },
   radioBtn: {
-    float: 'left',
+    // float: 'left',
+    textAlign: 'left',
     display: 'inline-block',
     width: 150,
     height: 40,
@@ -50,6 +51,7 @@ const styles = {
     marginBottom: 16,
   },
   dropzoneArea: {
+    position: 'relative'
   },
   dropzone: {
     paddingTop: 80,
@@ -59,6 +61,12 @@ const styles = {
     margin: '30px 5%',
     borderStyle: 'dashed',
     fontSize: 18
+  },
+  dropzonePreview: {
+    position: 'absolute',
+    top: 50,
+    right: 39,
+    width: 100,
   },
   btnSubmitArea: {
     margin: '40px auto 0',
@@ -81,7 +89,7 @@ export default class AddItem extends React.Component {
     super(props);
 
     this.state = {
-      radioDefaultValue: ''
+      files: []
     };
 
   }
@@ -104,6 +112,11 @@ export default class AddItem extends React.Component {
     const that = this;
 
     if (files && files[0] ) {
+
+      this.setState({
+        files: files
+      });
+
       var FR = new FileReader();
       FR.onload = function(e) {
         console.log('base64: ' + e.target.result);
@@ -239,7 +252,10 @@ export default class AddItem extends React.Component {
           <Dropzone style={styles.dropzone} onDrop={this._onDrop.bind(this)}>
             <div>請把圖片拖曳到此框框中，或點擊框框內選擇檔案上傳</div>
           </Dropzone>
+
+          <div>{this.state.files.map((file) => <img style={styles.dropzonePreview} src={file.preview} /> )}</div>
         </div>
+
 
         <div style={styles.btnSubmitArea}>
           <RaisedButton type="submit" label="送出" className="button-submit" primary={true} />
