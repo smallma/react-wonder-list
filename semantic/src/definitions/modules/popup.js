@@ -423,12 +423,6 @@ $.fn.popup = function(parameters) {
           }
         },
 
-        change: {
-          content: function(html) {
-            $popup.html(html);
-          }
-        },
-
         get: {
           html: function() {
             $module.removeData(metadata.html);
@@ -446,16 +440,13 @@ $.fn.popup = function(parameters) {
             $module.removeData(metadata.variation);
             return $module.data(metadata.variation) || settings.variation;
           },
-          popup: function() {
-            return $popup;
-          },
           popupOffset: function() {
             return $popup.offset();
           },
           calculations: function() {
             var
               targetElement  = $target[0],
-              targetPosition = (settings.inline || (settings.popup && settings.movePopup))
+              targetPosition = (settings.inline || settings.popup)
                 ? $target.position()
                 : $target.offset(),
               calculations = {},
@@ -697,7 +688,7 @@ $.fn.popup = function(parameters) {
             popup  = calculations.popup;
             parent = calculations.parent;
 
-            if(target.width === 0 && target.height === 0 && !(target.element instanceof SVGGraphicsElement)) {
+            if(target.width === 0 && target.height === 0) {
               module.debug('Popup target is hidden, no action taken');
               return false;
             }
@@ -1406,4 +1397,4 @@ $.fn.popup.settings = {
 };
 
 
-})( jQuery, window, document );
+})( jQuery, window , document );

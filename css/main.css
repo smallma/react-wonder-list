@@ -1,0 +1,15 @@
+.main {
+  color: green; }
+
+.row {
+  margin: 0 auto; }
+
+@media all and (max-width: 1023px) {
+  .items {
+    margin: 20px auto 0; } }
+
+@media all and (max-width: 768px) {
+  .item__info {
+    max-width: 100% !important; }
+    .item__info div {
+      text-align: center; } }

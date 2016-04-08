@@ -502,15 +502,10 @@ $.fn.checkbox = function(parameters) {
 
         trigger: {
           change: function() {
-            var
-              events       = document.createEvent('HTMLEvents'),
-              inputElement = $input[0]
+            module.verbose('Triggering change event from programmatic change');
+            $input
+              .trigger('change')
             ;
-            if(inputElement) {
-              module.verbose('Triggering native change event');
-              events.initEvent('change', true, false);
-              inputElement.dispatchEvent(events);
-            }
           }
         },
 
@@ -806,4 +801,4 @@ $.fn.checkbox.settings = {
 
 };
 
-})( jQuery, window, document );
+})( jQuery, window , document );
