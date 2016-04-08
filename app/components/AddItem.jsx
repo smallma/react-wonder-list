@@ -19,14 +19,14 @@ const styles = {
   },
   form: {
     margin: 40,
-    width: 600,
+    width: 710,
     margin: '40px auto'
   },
   titleStyle: {
     fontSize: '1.75rem'
   },
   radioGroup: {
-    margin: '30px 5% 0'
+    margin: '30px 5% 40px'
   },
   radioBtn: {
     float: 'left',
@@ -50,7 +50,6 @@ const styles = {
     marginBottom: 16,
   },
   dropzoneArea: {
-    marginTop: 110
   },
   dropzone: {
     paddingTop: 80,
@@ -195,6 +194,14 @@ export default class AddItem extends React.Component {
     return (
       <form style={styles.form} onSubmit={this._addPost.bind(this)}>
 
+        <div style={styles.radioGroup}>
+          <span>物品分類：</span>
+          <RadioButtonGroup name='itemClass' ref='itemClass' defaultSelected='DB7wb4qGmu'>
+            {radioButtons}
+          </RadioButtonGroup>
+        </div>
+        <br/>
+
         <TextField
           style={styles.textfield}
           hintText="物品主標題"
@@ -226,14 +233,6 @@ export default class AddItem extends React.Component {
           floatingLabelText="價格"
           ref='price'
         />
-        <br/>
-
-        <div style={styles.radioGroup}>
-          <span>物品分類：</span>
-          <RadioButtonGroup name='itemClass' ref='itemClass' defaultSelected='DB7wb4qGmu'>
-            {radioButtons}
-          </RadioButtonGroup>
-        </div>
         <br/>
 
         <div style={styles.dropzoneArea}>

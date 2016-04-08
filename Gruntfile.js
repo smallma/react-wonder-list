@@ -41,8 +41,8 @@ module.exports = function(grunt, type) {
         browserifyOptions: {
           debug: isDev
         },
-        keepAlive: isDev,
-        watch: isDev,
+        // keepAlive: isDev,
+        // watch: isDev,
         transform: [require("babelify").configure({
           presets: ["es2015", "react"],
           plugins: isDev ? [] : ["transform-react-constant-elements", "transform-react-inline-elements"]
@@ -73,5 +73,5 @@ module.exports = function(grunt, type) {
     }
   });
 
-  grunt.registerTask('default', ['env:development', 'browserSync', 'browserify', 'watch:sass']);
+  grunt.registerTask('default', ['env:development', 'browserSync', 'browserify', 'watch']);
 };

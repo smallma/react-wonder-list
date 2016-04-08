@@ -22,11 +22,17 @@ const styles = {
   //   marginBottom: 24,
   //   textAlign: 'center',
   // }
+  container: {
+    margin: '0 auto',
+    maxWidth: 1300,
+  },
   item: {
     marginTop: 20,
     padding: 40,
   },
   imgArea: {
+    maxWidth: 200,
+    margin: '0 auto 17px',
     textAlign: 'center'
   },
   img: {
@@ -38,12 +44,31 @@ const styles = {
   notBuy: {
 
   },
-  date: {
-    textAlign: 'right',
-    fontSize: 12,
-    color: 'gray'
-  },
-
+  info: {
+    main: {
+      maxWidth: 400,
+    },
+    class: {
+      fontSize: 18,
+    },
+    name: {
+      fontSize: 22,
+    },
+    Cost: {
+      fontSize: 14,
+    },
+    describe: {
+      marginTop: 6,
+      fontSize: 14
+    },
+    date: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      fontSize: 12,
+      color: 'gray'
+    }
+  }
 };
 
 // export default class Main extends PureComponent {
@@ -104,18 +129,18 @@ export default class Main extends React.Component {
           data-id={item.objectId}
           style={styles.item}
           key={item.objectId}
-          className="items col-xs-6 col-sm-6 col-md-6 col-lg-6">
+          className="items col-xs-10 col-sm-10 col-md-6 col-lg-6">
           <div style={boughtStyles} className="row">
-            <div style={styles.imgArea} className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div style={styles.imgArea} className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
               <img style={styles.img} src={imageSrc}/>
             </div>
-            <div style={styles.info} className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <div>{item.name} - {item.subtitle}</div>
-              <div>{itemClassName}</div>
-              <div>NT ${item.price}</div>
-              <div >{item.describe}</div>
+            <div style={styles.info.main} className="item__info col-xs-12 col-sm-8 col-md-8 col-lg-8">
+              <div style={styles.info.class}>{itemClassName}</div>
+              <div style={styles.info.name}>{item.name} - {item.subtitle}</div>
+              <div style={styles.info.cost}>NT$ {item.price}</div>
+              <div style={styles.info.describe}>{item.describe}</div>
               <br/>
-              <div style={styles.date}>Joined in {createdAt.toISOString().substring(0, 10)}</div>
+              <div style={styles.info.date}>{createdAt.toISOString().substring(0, 10)}</div>
             </div>
           </div>
         </div>
@@ -123,7 +148,7 @@ export default class Main extends React.Component {
     });
 
     return (
-      <div className="row">
+      <div style={styles.container} className="row">
         {row}
       </div>
     )
