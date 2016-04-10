@@ -111,7 +111,9 @@ export default class Main extends React.Component {
       return classname;
     }
 
-    this.props.items.map(function(item) {
+    var items = this.props.items || [];
+
+    items.map(function(item) {
 
       const imageSrc = item.image && item.image.url();
       const subTitle = item.subtitle || '';
