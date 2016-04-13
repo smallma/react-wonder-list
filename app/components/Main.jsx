@@ -1,27 +1,14 @@
 import React from "react";
 import { Link } from 'react-router';
-// import PureComponent from 'react-pure-render/component';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import IconButton from 'material-ui/lib/icon-button';
+import SweetAlert from 'sweetalert-react';
 
-// import GridList from 'material-ui/lib/grid-list/grid-list';
-// import GridTile from 'material-ui/lib/grid-list/grid-tile';
+import Actions from '../actions/action';
 
 
 const styles = {
-  // root: {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   justifyContent: 'space-around',
-  // },
-  // gridList: {
-  //   width: '90%',
-  //   margin: '0 auto',
-  //   overflowY: 'auto',
-  //   marginBottom: 24,
-  //   textAlign: 'center',
-  // }
   container: {
     margin: '0 auto',
     maxWidth: 1300,
@@ -79,39 +66,50 @@ export default class Main extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      sweetAlertShow: false,
+      clickItem: null
+    };
   }
 
-  componentDidUpdate() {
-    // $('.items')
-
-    console.log('')
-    $(".items").off("click");
-    $('.items').click(function () {
-      console.log($(this).data('id'));
-
-
+  _handleItemClick(item) {
+    console.log('click item name: ' + item.name.trim());
+    this.setState({
+      sweetAlertShow: true,
+      clickItem: item
     });
   }
 
+  _getClassName(classes, classId) {
+    let classname = '';
+    classes.map(function(itemClass) {
+      // console.log('Class obj: ' + JSON.stringify(itemClass));
+/*      if (classId === itemClass.objectId) {
+        classname = itemClass.name;
+      }*/
+      classname = classId === itemClass.objectId ? itemClass.name : '';
+    });
+
+    // console.log('className: ' + classname);
+    return classname;
+  }
+
+  _setItemHasBought(hasBought) {
+    event.preventDefault();
+    var that = this;
+
+    Actions.setItemHasBought(this.state.clickItem, hasBought)
+    .then((obj) => {
+      this.setState({ sweetAlertShow: false });
+      that.props.history.pushState(null, '/');
+    });
+  }
 
   render() {
     let row = [];
     const that = this;
-
-    function _getClassName(classes, classId) {
-      let classname = '';
-      classes.map(function(itemClass) {
-        console.log('Class obj: ' + JSON.stringify(itemClass));
-        if (classId === itemClass.objectId) {
-          classname = itemClass.name;
-        }
-      });
-
-      console.log('className: ' + classname);
-      return classname;
-    }
-
-    var items = this.props.items || [];
+    const items = this.props.items || [];
 
     items.map(function(item) {
 
@@ -122,8 +120,8 @@ export default class Main extends React.Component {
       let itemClassName = ''
 
       if (item.classId && item.classId.objectId) {
-        console.log(item.classId.objectId);
-        itemClassName = _getClassName(that.props.classes, item.classId.objectId);
+        // console.log(item.classId.objectId);
+        itemClassName = that._getClassName(that.props.classes, item.classId.objectId);
       }
 
       row.push(
@@ -131,6 +129,7 @@ export default class Main extends React.Component {
           data-id={item.objectId}
           style={styles.item}
           key={item.objectId}
+          onClick={that._handleItemClick.bind(that, item)}
           className="items col-xs-10 col-sm-10 col-md-6 col-lg-6">
           <div style={boughtStyles} className="row">
             <div style={styles.imgArea} className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -150,8 +149,28 @@ export default class Main extends React.Component {
     });
 
     return (
-      <div style={styles.container} className="row">
-        {row}
+      <div>
+        <div style={styles.container} className="row">
+          {row}
+        </div>
+        <div>
+          <SweetAlert
+            show={this.state.sweetAlertShow}
+            title="Demo"
+            text="SweetAlert in React"
+            onConfirm={() => this._setItemHasBought(true)}
+            onCancel={() => this._setItemHasBought(false)}
+            title="Do you have it?"
+            text="You can set this item has bought or not."
+            type="warning"
+            showCancelButton={true}
+            confirmButtonColor="#DD6B55"
+            confirmButtonText="Yes, has bought!"
+            cancelButtonText="No, I don't have it!"
+            closeOnConfirm={false}
+            closeOnCancel={false}
+          />
+        </div>
       </div>
     )
   }

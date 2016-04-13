@@ -14,5 +14,8 @@ export default {
   },
   addRelationClass(itemObj, classObj) {
     return ParseReact.Mutation.Set(itemObj, {'classId': classObj}).dispatch();
+  },
+  setItemHasBought(itemObj, hasBought) {
+    return ParseReact.Mutation.Set(itemObj, {'hasBought': hasBought}).dispatch();
   }
 }

@@ -1,8 +1,6 @@
 import React from 'react';
-// import PureComponent from 'react-pure-render/component';
 import shallowCompare from 'react-addons-shallow-compare';
 import { Parse } from 'parse';
-// import ParseReact from 'parse-react';
 
 import TextField from 'material-ui/lib/text-field';
 import RadioButton from 'material-ui/lib/radio-button';
@@ -12,6 +10,7 @@ const colors = require('material-ui/lib/styles/colors.js');
 
 import Actions from '../actions/action';
 import Dropzone from 'react-dropzone';
+
 
 const styles = {
   blockList: {
